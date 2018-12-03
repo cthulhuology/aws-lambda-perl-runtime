@@ -13,8 +13,9 @@ export PERL_BASE="/perl"
 mkdir -p $PERL_BASE
 cd $PERL_BASE
 curl --create-dirs -L -o src/perl-${PERL_VERSION}.tar.gz http://www.cpan.org/src/5.0/perl-${PERL_VERSION}.tar.gz
-cd src && tar zxf curl perl-${PERL_VERSION}.tar.gz
-cd perl-${PERL_VERSION}
+cd $PERL_BASE/src 
+tar zxf perl-${PERL_VERSION}.tar.gz
+cd $PERL_BASE/src/perl-${PERL_VERSION}
 ./Configure -des -Dprefix=$PERL_BASE/perl-${PERL_VERSION} -Dotherlibdirs=$PERL_BASE/perl-${PERL_VERSION}/lib/perl5
 make
 make install
