@@ -1,0 +1,25 @@
+#!/perl/bin/perl
+
+# Set variables based on AWS Lambda runtime environment
+map { ${"main::$_"} = $ENV{$_} } qw/ _HANDLER AWS_REGION AWS_EXECUTION_ENV AWS_LAMBDA_FUNCTION_NAME 
+  AWS_LAMBDA_FUNCTION_MEMORY_SIZE AWS_LAMBDA_FUNCTION_VERSION AWS_LAMBDA_LOG_GROUP_NAME AWS_LAMBDA_LOG_STREAM_NAME 
+  AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY AWS_SESSION_TOKEN LANG TZ LAMBDA_TASK_ROOT LAMBDA_RUNTIME_DIR PATH 
+  LD_LIBRARY_PATH NODE_PATH PYTHONPATH AWS_LAMBDA_RUNTIME_API /;
+
+# we will use local::lib in the directory where we are running our lambda
+use local::lib "$LAMBDA_TASK_ROOT"
+
+# make sure we are running in that directory!
+chdir $LAMBDA_TASK_ROOT
+
+sub init_error {
+  my ($request_id,$error,$errorType) = @_;
+  my $json = "{\"errorMessage\" : \"$error\", \"errorType\" : \"$errorType\"}"
+  `curl -X POST "http://$AWS_LAMBDA_RUNTIME_API/2018-06-01/runtime/invocation/$request/error"  -d "$json"`
+}
+
+sub 
+
+=pod
+
+=cut
